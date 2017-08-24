@@ -1,3 +1,5 @@
+![tree](screenshort/tree.png)
+
 ### Set up
 
 ```
