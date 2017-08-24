@@ -7,12 +7,16 @@ var expect = chai.expect;
 describe('dataService', () => {
     var sections  = require('../../data/sections.json');
     var qas = require('../../data/4,5,6,7,8,11,12,15,16,17.json');
+    var states = require('../../data/states.json');
+
+    it('getTree', () => {
+        let tree = dataService.getTree(sections, qas);
+
+        console.log(tree);
+    });
 
     it('putQaIntoSections', () => {
         let sectionObj = dataService.putQaIntoSections(sections, qas);         
-
-        console.log('new sectionObj', sectionObj);
-        // expect(true).to.be.true;
     });
 
     it('convertArrToObj', () => {
@@ -42,5 +46,10 @@ describe('dataService', () => {
                     parentId: -2 
                 } 
             });        
+    });
+
+    it('getUniqueStateArr', () => {
+        let newStates = dataService.getUniqueStateArr(states);
+        expect(newStates).to.deep.equal(newStates);
     });
 });

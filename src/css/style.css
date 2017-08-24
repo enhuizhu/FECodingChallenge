@@ -1,0 +1,35 @@
+.h4 {
+    cursor: pointer;
+}
+
+.node {
+    display: block;
+    position: relative;
+    left: 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+question {
+    background: white;
+    border: solid 1px gray;
+    padding: 10px;
+    white-space: inherit;
+    display: block;
+    border-radius: 3px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+question + answer {
+    display: none;
+    background: #f2f5f1;
+    margin-top: 5px;
+    padding: 10px; 
+}
+
+li.active question + answer {
+    display: block;
+}

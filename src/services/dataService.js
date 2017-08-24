@@ -40,6 +40,24 @@ class dataService {
         });
     }
 
+    static getTree(sections, qas) {
+        let sectionsObj = this.putQaIntoSections(sections, qas);
+        
+        Object.keys(sectionsObj).map(k => {
+            let parent = sectionsObj[sectionsObj[k].parentId]
+            
+            if (parent) {
+                if (!parent.children) {
+                    parent.children = [];
+                }
+
+                parent.children.push(sectionsObj[k]);
+            }
+        });
+
+        return sectionsObj['-1'];
+    }
+
     static putQaIntoSections(sections, qas) {
         let newSections = [].concat(sections);
         let sectionsObj = this.convertArrToObj(sections);
@@ -67,6 +85,47 @@ class dataService {
         });
 
         return obj;
+    }
+
+    static getTreeDoms(tree, states) {
+        let container = '<div class="node">';
+        
+        container += `<h4>${tree.title}</h4>`;
+
+        if (tree.qas) {
+            container += '<ul class="qas">';
+                tree.qas.map(v => {
+                    container += '<li class="qas-wrapper' + (states.indexOf(v.tocId) !== -1 ? ' active' : '') + '">';
+                        container += v.question;
+                        container += v.answer;
+                    container += '</li>';
+                });
+            container += '</ul>'
+        }
+
+        if (tree.children) {
+            tree.children.map(v => {
+                container += this.getTreeDoms(v, states);
+            });
+        }
+
+        container += '</div>';
+
+        return container;
+    }
+
+    static getUniqueStateArr(states) {
+        let arr = [];
+        
+        states.map(v => {
+            v.expanded.map(v2 => {
+                if (arr.indexOf(v2) === -1) {
+                    arr.push(v2);
+                }
+            });
+        });
+
+        return arr;
     }
 }
 
